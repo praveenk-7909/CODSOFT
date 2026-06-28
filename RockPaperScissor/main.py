@@ -4,7 +4,7 @@ import random
 # ── Palette ────────────────────────────────────────────────────
 BG     = "#f5f5f0"
 CARD   = "#ffffff"
-ACCENT = "#ae36c0"
+ACCENT = "#912da0"
 TEXT   = "#2d2d2d"
 MUTED  = "#757575"
 BORDER = "#e0e0e0"
@@ -39,7 +39,7 @@ class RPS:
         body = tk.Frame(self.root, bg=BG)
         body.pack(fill="both", expand=True, padx=20, pady=14)
 
-        # ── Score board ───────────────────────────────────────
+        
         sb = tk.Frame(body, bg=BG)
         sb.pack(fill="x", pady=(0, 12))
 
@@ -55,7 +55,7 @@ class RPS:
             lbl.pack(pady=(0, 8))
             self.score_labels[label] = lbl
 
-        # ── Arena ─────────────────────────────────────────────
+        
         arena = tk.Frame(body, bg=CARD,
                          highlightthickness=1, highlightbackground=BORDER)
         arena.pack(fill="x", pady=(0, 14))
@@ -84,7 +84,7 @@ class RPS:
         tk.Label(arena, textvariable=self.sub_var,
                  font=("Segoe UI", 10), bg=CARD, fg=MUTED).pack(pady=(2, 14))
 
-        # ── Choice buttons ────────────────────────────────────
+        
         btn_row = tk.Frame(body, bg=BG)
         btn_row.pack(fill="x", pady=(0, 12))
 
@@ -102,7 +102,7 @@ class RPS:
             f.bind("<Enter>", lambda e, fr=f: fr.config(highlightbackground=ACCENT))
             f.bind("<Leave>", lambda e, fr=f: fr.config(highlightbackground=BORDER))
 
-        # ── Reset button ──────────────────────────────────────
+        #
         tk.Button(body, text="Reset scores",
                   font=("Segoe UI", 10), bg=CARD, fg=MUTED,
                   relief="flat", bd=0, pady=8,
