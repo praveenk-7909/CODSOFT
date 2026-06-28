@@ -1,6 +1,5 @@
 import tkinter as tk
 
-# ── Palette ────────────────────────────────────────────────────
 BG       = "#2b2b2b"
 DISP_BG  = "#2b2b2b"
 NUM_BG   = "#3c3c3c"
@@ -19,13 +18,13 @@ class Calculator:
         root.configure(bg=BG)
         root.resizable(False, False)
 
-        self.expression = ""   # full expression string
+        self.expression = ""   
         self.just_evaled = False
 
         self._build_display()
         self._build_buttons()
 
-    # ── Display ────────────────────────────────────────────────
+
     def _build_display(self):
         frame = tk.Frame(self.root, bg=DISP_BG)
         frame.pack(fill="x", padx=0, pady=0)
@@ -40,12 +39,12 @@ class Calculator:
                  font=("Segoe UI", 42, "bold"), bg=DISP_BG, fg=DISP_FG,
                  anchor="e", padx=16).pack(fill="x", pady=(0, 12))
 
-    # ── Button grid ────────────────────────────────────────────
+    
     def _build_buttons(self):
         grid = tk.Frame(self.root, bg=BG)
         grid.pack(padx=8, pady=8)
 
-        # layout: (label, col, row, colspan, bg, fg, action)
+        
         buttons = [
             ("AC",  0, 0, 1, FUNC_BG, FUNC_FG, "clear"),
             ("+/-", 1, 0, 1, FUNC_BG, FUNC_FG, "negate"),
@@ -67,7 +66,7 @@ class Calculator:
             ("3",   2, 3, 1, NUM_BG,  NUM_FG,  "3"),
             ("+",   3, 3, 1, OP_BG,   OP_FG,   "+"),
 
-            ("0",   0, 4, 2, NUM_BG,  NUM_FG,  "0"),   # wide
+            ("0",   0, 4, 2, NUM_BG,  NUM_FG,  "0"),   
             (".",   2, 4, 1, NUM_BG,  NUM_FG,  "."),
             ("=",   3, 4, 1, OP_BG,   OP_FG,   "="),
         ]
@@ -92,19 +91,15 @@ class Calculator:
             btn.grid(row=row, column=col, columnspan=span,
                      padx=4, pady=4, ipadx=0, ipady=0,
                      sticky="nsew")
-            # fix pixel size
-            btn.config(width=w // 10)   # approximate; use place for exact
+            btn.config(width=w // 10)   
 
-        # make all cells expand evenly
         for c in range(4):
             grid.columnconfigure(c, minsize=BTN_W, weight=1)
         for r in range(5):
             grid.rowconfigure(r, minsize=BTN_H, weight=1)
 
-        # keyboard support
         self.root.bind("<Key>", self._key)
 
-    # ── Actions ────────────────────────────────────────────────
     def handle(self, action):
         expr = self.expression
 
@@ -158,24 +153,22 @@ class Calculator:
                 pass
             return
 
-        # digit or operator appended
         if self.just_evaled and action not in ("+", "-", "*", "/"):
             self.expression = ""
             self.expr_var.set("")
         self.just_evaled = False
 
-        # prevent double operators
         if action in ("+", "-", "*", "/") and expr and expr[-1] in "+-*/":
             self.expression = expr[:-1] + action
         else:
             self.expression += action
 
-        # live preview
         self.expr_var.set(self.expression)
         try:
             self.result_var.set(self._fmt(eval(self.expression)))
         except:
             self.result_var.set(self.expression)
+
 
     def _fmt(self, value):
         if isinstance(value, float) and value.is_integer():
