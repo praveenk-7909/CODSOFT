@@ -3,7 +3,7 @@ from tkinter import messagebox
 import random
 import string
 
-# ── Palette ────────────────────────────────────────────────────
+
 BG      = "#f5f5f0"
 CARD    = "#ffffff"
 ACCENT  = "#5c6bc0"
@@ -36,7 +36,6 @@ class PasswordGenerator:
         self._generate()
 
     def _build_ui(self):
-        # Header
         tk.Frame(self.root, bg=ACCENT).pack(fill="x")
         tk.Label(self.root, text="Password Generator",
                  font=("Segoe UI", 14, "bold"),
@@ -50,7 +49,6 @@ class PasswordGenerator:
         body = tk.Frame(self.root, bg=BG)
         body.pack(fill="both", expand=True, padx=20, pady=12)
 
-        # ── Length ────────────────────────────────────────────
         len_frame = tk.Frame(body, bg=CARD,
                              highlightthickness=1, highlightbackground=BORDER)
         len_frame.pack(fill="x", pady=(0, 10))
@@ -73,7 +71,7 @@ class PasswordGenerator:
         )
         self.slider.pack(fill="x", padx=14, pady=(0, 12))
 
-        # ── Checkboxes ────────────────────────────────────────
+       
         opt_frame = tk.Frame(body, bg=CARD,
                              highlightthickness=1, highlightbackground=BORDER)
         opt_frame.pack(fill="x", pady=(0, 10))
@@ -97,7 +95,7 @@ class PasswordGenerator:
                 command=self._generate, cursor="hand2"
             ).grid(row=i // 2, column=i % 2, sticky="w", padx=4, pady=2)
 
-        # ── Password display ──────────────────────────────────
+        
         disp = tk.Frame(body, bg=CARD,
                         highlightthickness=1, highlightbackground=BORDER)
         disp.pack(fill="x", pady=(0, 10))
@@ -111,7 +109,7 @@ class PasswordGenerator:
         )
         pwd_entry.pack(fill="x", padx=14, ipady=10, pady=(12, 4))
 
-        # Strength bar (4 segments)
+        
         bar_row = tk.Frame(disp, bg=CARD)
         bar_row.pack(fill="x", padx=14, pady=(0, 4))
         self.bars = []
@@ -125,7 +123,7 @@ class PasswordGenerator:
                                        bg=CARD, fg=MUTED)
         self.strength_label.pack(pady=(0, 10))
 
-        # ── Buttons ───────────────────────────────────────────
+        
         btn_row = tk.Frame(body, bg=BG)
         btn_row.pack(fill="x")
 
@@ -148,7 +146,7 @@ class PasswordGenerator:
             command=self._copy
         ).pack(side="left", expand=True, fill="x")
 
-    # ── Logic ──────────────────────────────────────────────────
+    
     def _on_length(self, val):
         self.len_label.config(text=str(int(float(val))))
         self._generate()
