@@ -6,16 +6,16 @@ from datetime import datetime, timedelta
 DATA_FILE    = "todos.json"
 REMIND_AFTER = timedelta(minutes=1)
 
-# ── Palette ────────────────────────────────────────────────────
-BG       = "#f5f5f0"   # warm off-white page
-CARD     = "#ffffff"   # card surface
-ACCENT   = "#5c6bc0"   # indigo accent
-DONE_COL = "#9e9e9e"   # muted for completed
-TEXT     = "#2d2d2d"   # primary text
-MUTED    = "#757575"   # secondary text
-BORDER   = "#e0e0e0"   # hairline
-SUCCESS  = "#43a047"   # green checkmark
-DANGER   = "#e53935"   # red delete
+
+BG       = "#f5f5f0"   
+CARD     = "#ffffff"   
+ACCENT   = "#5c6bc0"   
+DONE_COL = "#9e9e9e"   
+TEXT     = "#2d2d2d"   
+MUTED    = "#757575"   
+BORDER   = "#e0e0e0"   
+SUCCESS  = "#43a047"   
+DANGER   = "#e53935"   
 
 def load():
     if os.path.exists(DATA_FILE):
@@ -43,7 +43,7 @@ class TodoApp:
         self.refresh()
         self.check_reminders()
 
-    # ── UI ─────────────────────────────────────────────────────
+    
     def build_ui(self):
         # Header
         hdr = tk.Frame(self.root, bg=ACCENT)
@@ -51,7 +51,7 @@ class TodoApp:
         tk.Label(hdr, text="My To-Do List", font=("Segoe UI", 15, "bold"),
                  bg=ACCENT, fg="white").pack(pady=14)
 
-        # Input card
+        
         ic = tk.Frame(self.root, bg=CARD, bd=0,
                       highlightthickness=1, highlightbackground=BORDER)
         ic.pack(fill="x", padx=16, pady=(14, 0))
@@ -74,12 +74,12 @@ class TodoApp:
                                   command=self.save_task)
         self.save_btn.pack(side="right", padx=6, pady=6)
 
-        # Stats bar
+        
         self.stats_var = tk.StringVar()
         tk.Label(self.root, textvariable=self.stats_var,
                  font=("Segoe UI", 9), bg=BG, fg=MUTED).pack(anchor="w", padx=18, pady=(8, 2))
 
-        # Scrollable task list
+        
         outer = tk.Frame(self.root, bg=BG)
         outer.pack(fill="both", expand=True, padx=16, pady=(0, 8))
 
@@ -96,7 +96,7 @@ class TodoApp:
         self.canvas.bind_all("<MouseWheel>",
             lambda e: self.canvas.yview_scroll(-1 * (e.delta // 120), "units"))
 
-        # Bottom bar
+        
         bar = tk.Frame(self.root, bg=CARD,
                        highlightthickness=1, highlightbackground=BORDER)
         bar.pack(fill="x", side="bottom")
@@ -113,7 +113,7 @@ class TodoApp:
                   command=self.clear_done,
                   activebackground=BG).pack(side="right")
 
-    # ── Placeholder helpers ────────────────────────────────────
+    
     def _clear_placeholder(self, e):
         if self.entry.get() == "Add a new task…":
             self.entry.delete(0, "end")
@@ -124,7 +124,7 @@ class TodoApp:
             self.entry.insert(0, "Add a new task…")
             self.entry.config(fg=MUTED)
 
-    # ── Save / update ──────────────────────────────────────────
+    
     def save_task(self):
         text = self.task_var.get().strip()
         if not text or text == "Add a new task…":
@@ -153,7 +153,7 @@ class TodoApp:
         self._restore_placeholder(None)
         self.save_btn.config(text="Add", bg=ACCENT)
 
-    # ── Task card ──────────────────────────────────────────────
+    
     def make_card(self, index, task):
         done = task["done"]
         card = tk.Frame(self.tasks_frame, bg=CARD,
@@ -161,7 +161,7 @@ class TodoApp:
                         highlightbackground=BORDER)
         card.pack(fill="x", pady=3)
 
-        # Left color bar
+
         bar_color = DONE_COL if done else ACCENT
         tk.Frame(card, bg=bar_color, width=4).pack(side="left", fill="y")
 
@@ -180,7 +180,8 @@ class TodoApp:
                  bg=CARD, anchor="w", wraplength=280, justify="left"
                  ).pack(side="left", fill="x", expand=True, pady=10)
 
-        # Buttons
+
+
         if not done:
             tk.Button(card, text="✏", font=("Segoe UI", 11),
                       bg=CARD, fg=ACCENT, relief="flat", bd=0,
@@ -196,7 +197,7 @@ class TodoApp:
                   command=lambda i=index: self.delete_task(i)
                   ).pack(side="right", padx=(0, 4))
 
-    # ── Refresh ────────────────────────────────────────────────
+    
     def refresh(self):
         for w in self.tasks_frame.winfo_children():
             w.destroy()
@@ -215,7 +216,7 @@ class TodoApp:
         active = total - done
         self.stats_var.set(f"{active} active  •  {done} done  •  {total} total")
 
-    # ── Actions ────────────────────────────────────────────────
+    
     def toggle_done(self, index):
         self.todos[index]["done"] = not self.todos[index]["done"]
         save(self.todos)
@@ -244,7 +245,7 @@ class TodoApp:
                 save(self.todos)
                 self.refresh()
 
-    # ── Reminders ──────────────────────────────────────────────
+    
     def check_reminders(self):
         now = datetime.now()
         due = []
