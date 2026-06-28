@@ -1,7 +1,7 @@
 import tkinter as tk
 import random
 
-# ── Palette ────────────────────────────────────────────────────
+
 BG     = "#f5f5f0"
 CARD   = "#ffffff"
 ACCENT = "#912da0"
